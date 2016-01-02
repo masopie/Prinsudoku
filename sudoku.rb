@@ -57,8 +57,6 @@ def pretty_board(board)
     pretty_board_string << "\n"
   end
   puts "Solved!"
-  puts pretty_board_string
-  # purple_rain(pretty_board_string)
 end
 
 #Takes in a board in some form and
@@ -161,24 +159,3 @@ def purple_rain(prince)
   else puts "lame"
   end
 end
-
-# From runner.rb
-# board_string = File.readlines('sudoku_puzzles.txt').first.chomp
-board_string = "---------------------------------------------------------------------------------"
-solved_board = solve(board_string)
-puts pretty_board(solved_board)
-if solved?(solved_board)
-  puts "Board solved!"
-else
-  puts "Board is not solvable!"
-end
-
-475936281
-912851-6-
-6----4-5-
---74-283-
-34976---5
---83--49-
-15--87--2
--9----6--
--26-495-3
