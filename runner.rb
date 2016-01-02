@@ -16,16 +16,20 @@ require_relative 'sudoku'
 
 #Read the first puzzle
 board_string = File.readlines('sudoku_puzzles.txt').first.chomp
+puts board_strings = File.readlines('sudoku_puzzles.txt')
 
-#Run the board solver and get a board back
-solved_board = solve(board_string)
+board_strings.each do |board_string|
+  board_string = board_string.chomp!
+  #Run the board solver and get a board back
+  solved_board = solve(board_string)
 
-#Print a pretty version of the board to the screen
-puts pretty_board(solved_board)
+  #Print a pretty version of the board to the screen
+  puts pretty_board(solved_board)
 
-#Print whether or not we succeeded
-if solved?(solved_board)
-  puts "Board solved!"
-else
-  puts "Board is not solvable!"
+  #Print whether or not we succeeded
+  if solved?(solved_board)
+    puts "Board solved!"
+  else
+    puts "Board is not solvable!"
+  end
 end

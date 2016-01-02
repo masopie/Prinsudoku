@@ -1,0 +1,53 @@
+# INITIALIZE method
+# ACCEPTS string of 81 numbers, represented as characters
+# RETURNS Array of hashes
+# SPLIT initial string into character array
+# FOR EACH cell in character array
+# CREATE a hash containing an array of possible solutions for that cell and an array of cells that that cell can see
+#    possible_values = ARRAY of numbers from 1 to 9
+#    can_see => (ARRAY) return value of function to calculate this
+#
+
+# can_see method
+# ACCEPTS cell number (0-80)
+# RETURNS array of cells that that cell can see
+# ADD cell numbers that share the same row
+#  cell numbers that share the same row will have the same value of an integer division of (cell number/9)
+# ADD cell numbers that share the same column
+#  cell numbers that share the same column will have the same value of a modulo (cell number % 9)
+# ADD cell numbers that share the same block
+#  cell numbers that share the same column will have both the same result when integer divided by 27 (cell number/27) and when the modulus-3 of the integer division of the cell number by 3 (cell number/3)%3
+
+MAIN LOGIC LOOP
+Within the solve method ITERATE over hash_array returned from INITIALIZE
+For each cell_info[:possible_values]
+  if length is 1
+    do nothing
+  if length is > 1
+    iterate through the can see values
+      for each value that exists in the possible values array, delete it from possible values
+  (Temporary) p the new hash
+Call the solved method (should this contain the construct array?)
+  if the solved method sees that there are no "-"
+  solve(board)
+
+NEW LOGIC LOOP
+
+ITERATE over each row
+-Select cell numbers to be part of row by cellnum/9
+-ASSIGN a variable to hold necessary values, array of 1 to 9
+-ITERATE over cell numbers in row
+--CHECK each member to see length of possible values array
+---Remove values from necessary array if length of poss vals == 1
+---ELSE add cell number to array of undetermined cells
+-end iteration
+-ITERATE over remainder of necessary values array
+--CHECK each member of undetermined cells
+---IF undetermined value is only possible in one of the undetermined cells, assign it to that cell
+----cellnum[:possible_values] = [value]
+-end iteration
+end iteration
+
+iterate over columns...
+  iterate over blocks...
+
