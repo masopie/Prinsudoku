@@ -1,15 +1,15 @@
 def can_see_row(cell_number)
-  (0..80).to_a.select { |num| num/9 == cell_number/9} - [cell_number]
+  (0..80).to_a.select { |num| num/9 == cell_number/9}
 end
 
 def can_see_column(cell_number)
-  (0..80).to_a.select { |num| num % 9 == cell_number % 9} - [cell_number]
+  (0..80).to_a.select { |num| num % 9 == cell_number % 9}
 end
 
 def can_see_block(cell_number)
   (0..80).to_a.select { |num|
     num/27 == cell_number/27 && (num/3)%3 == (cell_number/3)%3
-  } - [cell_number]
+  }
 end
 
 def big_array(board_string)
@@ -21,7 +21,7 @@ def calculate_cells_cell_can_see(cell_number)
   cells_can_see << can_see_row(cell_number)
   cells_can_see << can_see_column(cell_number)
   cells_can_see << can_see_block(cell_number)
-  cells_can_see.flatten.uniq
+  cells_can_see.flatten.uniq - [cell_number]
 end
 
 def initialize_cell_info(board_string)
@@ -65,8 +65,101 @@ def solve(board_string)
         remove_possible_values(cell, cell_info)
       end
     end
+  row_check(cell_info) if !solved?(cell_info)
+  column_check(cell_info) if !solved?(cell_info)
+  block_check(cell_info) if !solved?(cell_info)
   end
+# puts cell_info
+
+
 cell_info
+end
+
+# ITERATE over each row
+# -Select cell numbers to be part of row by cellnum/9
+# -ASSIGN a variable to hold necessary values, array of 1 to 9
+# -ITERATE over cell numbers in row
+# --CHECK each member to see length of possible values array
+# ---Remove values from necessary array if length of poss vals == 1
+# ---ELSE add cell number to array of undetermined cells
+# -end iteration
+# -ITERATE over remainder of necessary values array
+# --CHECK each member of undetermined cells
+# ---IF undetermined value is only possible in one of the undetermined cells, assign it to that cell
+# ----cellnum[:possible_values] = [value]
+# -end iteration
+# end iteration
+# iterate over columns...
+#   iterate over blocks...
+
+
+def row_check(board_values)
+  (0..8).each do |row|
+    row_cells = can_see_row(row * 9)
+    uncertain_values = (1..9).to_a
+    uncertain_cells = []
+    row_cells.each do |cell|
+      if board_values[cell][:possible_values].length > 1
+        uncertain_cells << cell
+      else
+        uncertain_values.delete(board_values[cell][:possible_values][0])
+      end
+    end
+    uncertain_values.each do |val|
+      real_cell = uncertain_cells.select do |cell|
+        board_values[cell][:possible_values].include? val
+      end
+      if real_cell.length == 1
+        board_values[real_cell[0]][:possible_values] = [val]
+      end
+    end
+  end
+end
+
+def column_check(board_values)
+  (0..8).each do |col|
+    col_cells = can_see_column(col * 9)
+    uncertain_values = (1..9).to_a
+    uncertain_cells = []
+    col_cells.each do |cell|
+      if board_values[cell][:possible_values].length > 1
+        uncertain_cells << cell
+      else
+        uncertain_values.delete(board_values[cell][:possible_values][0])
+      end
+    end
+    uncertain_values.each do |val|
+      real_cell = uncertain_cells.select do |cell|
+        board_values[cell][:possible_values].include? val
+      end
+      if real_cell.length == 1
+        board_values[real_cell[0]][:possible_values] = [val]
+      end
+    end
+  end
+end
+
+def block_check(board_values)
+  [0,3,6,27,30,33,54,57,60].each do |block|
+    block_cells = can_see_block(block * 9)
+    uncertain_values = (1..9).to_a
+    uncertain_cells = []
+    block_cells.each do |cell|
+      if board_values[cell][:possible_values].length > 1
+        uncertain_cells << cell
+      else
+        uncertain_values.delete(board_values[cell][:possible_values][0])
+      end
+    end
+    uncertain_values.each do |val|
+      real_cell = uncertain_cells.select do |cell|
+        board_values[cell][:possible_values].include? val
+      end
+      if real_cell.length == 1
+        board_values[real_cell[0]][:possible_values] = [val]
+      end
+    end
+  end
 end
 
 #Returns a boolean indicating whether

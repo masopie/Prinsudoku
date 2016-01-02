@@ -2,18 +2,18 @@ require_relative 'sudoku'
 
   describe 'cell selection' do
     it 'returns correct values for cells in same row' do
-      expect(can_see_row(0)).to eq [1,2,3,4,5,6,7,8]
-      expect(can_see_row(31)).to eq [27,28,29,30,32,33,34,35]
+      expect(can_see_row(0)).to eq [0,1,2,3,4,5,6,7,8]
+      expect(can_see_row(31)).to eq [27,28,29,30,31,32,33,34,35]
     end
 
     it 'returns correct values for cells in same column' do
-      expect(can_see_column(0)).to eq [9,18,27,36,45,54,63,72]
-      expect(can_see_column(59)).to eq [5,14,23,32,41,50,68,77]
+      expect(can_see_column(0)).to eq [0,9,18,27,36,45,54,63,72]
+      expect(can_see_column(59)).to eq [5,14,23,32,41,50,59,68,77]
     end
 
     it 'returns correct values for cells in same block' do
-      expect(can_see_block(0)).to eq [1,2,9,10,11,18,19,20]
-      expect(can_see_block(34)).to eq [33,35,42,43,44,51,52,53]
+      expect(can_see_block(0)).to eq [0,1,2,9,10,11,18,19,20]
+      expect(can_see_block(34)).to eq [33,34,35,42,43,44,51,52,53]
     end
   end
 
