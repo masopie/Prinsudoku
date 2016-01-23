@@ -56,7 +56,8 @@ def pretty_board(board)
     pretty_board_string << pretty_row.join(" | ")
     pretty_board_string << "\n"
   end
-  puts "Solved!"
+  puts pretty_board_string
+  #puts "Solved!"
 end
 
 #Takes in a board in some form and
