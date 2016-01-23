@@ -57,6 +57,7 @@ def pretty_board(board)
     pretty_board_string << "\n"
   end
   puts pretty_board_string
+  sleep(0.05)
   #puts "Solved!"
 end
 
